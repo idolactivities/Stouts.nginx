@@ -1,0 +1,8 @@
+server {
+    listen 80;
+    server_name localhost {{ inventory_hostname }};
+
+    location / {
+        return 200 'ai katsu';
+    }
+}

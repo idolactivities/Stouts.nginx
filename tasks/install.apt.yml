@@ -1,6 +1,5 @@
 ---
-
-- include_vars: "{{ansible_distribution}}.yml"
+- include_vars: "{{ ansible_distribution }}.yml"
 
 - name: Install dependencies
   apt:
@@ -13,5 +12,4 @@
 
 - name: Install Dependencies
   apt:
-    name: "{{ item }}"
-  with_items: [ nginx, python-passlib ]
+    name: "{{ [ 'nginx', 'python-passlib' ] }}"

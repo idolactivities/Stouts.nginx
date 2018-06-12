@@ -1,4 +1,4 @@
-[nodes]
+[nginx]
 debian-stretch-01
 debian-jessie-01
 centos-6-01
