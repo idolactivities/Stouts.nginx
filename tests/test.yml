@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: Check that nginx is reachable
+      uri:
+        url: "http://{{ inventory_hostname }}"
