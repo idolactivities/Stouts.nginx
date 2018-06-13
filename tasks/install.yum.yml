@@ -1,0 +1,27 @@
+---
+- name: Upload nginx's signing key
+  copy:
+    src: nginx_signing_key.asc
+    dest: "{{ nginx_rpm_key_path }}"
+    mode: 0644
+
+- name: Trust nginx's signing key
+  rpm_key:
+    key: "{{ nginx_rpm_key_path }}"
+    state: present
+
+- name: Configure nginx yum repository
+  yum_repository:
+    name: nginx
+    description: Official nginx repository
+    baseurl: "http://nginx.org/packages/{{ 'centos' if ansible_distribution == 'CentOS' else 'rhel' }}/{{ ansible_distribution_major_version }}/$basearch/"
+    gpgkey: "file://{{ nginx_rpm_key_path }}"
+    gpgcheck: yes
+
+- name: Install packages via yum
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - nginx
+    - "{{ 'python-passlib' if nginx_auth_users else [] }}"
+    - "{{ 'libselinux-python' if (ansible_selinux is defined and (ansible_selinux and ansible_selinux.status == 'enabled')) else [] }}"

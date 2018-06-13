@@ -1,0 +1,18 @@
+---
+- name: Trust the nginx signing key
+  apt_key:
+    data: "{{ lookup('file', 'nginx_signing_key.asc') }}"
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+
+- name: Configure nginx apt repository
+  apt_repository:
+    filename: nginx
+    repo: "deb http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
+
+- name: Install packages via apt
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - nginx
+    - "{{ 'python-passlib' if nginx_auth_users else [] }}"
+    - "{{ 'python-selinux' if (ansible_selinux is defined and (ansible_selinux and ansible_selinux.status == 'enabled')) else [] }}"

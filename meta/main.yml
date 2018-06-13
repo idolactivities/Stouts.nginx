@@ -1,19 +1,25 @@
 ---
-
 dependencies: []
 
 galaxy_info:
-  author: klen
-  company: Stouts
-  description: Manage nginx
+  author: lae
+  company: Idol Activities
+  description: Install and configure Nginx
   license: MIT
   platforms:
+  - name: Debian
+    versions:
+      - stretch
+      - jessie
+      - sid
   - name: Ubuntu
     versions:
-    - all
-  - name: RedHat
+      - bionic
+      - trusty
+      - xenial
+  - name: EL
     versions:
-    - all
+      - 7
   categories:
   - cloud
   - system

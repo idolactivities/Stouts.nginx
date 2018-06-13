@@ -1,11 +1,12 @@
 ---
+nginx_enabled: yes
 
-nginx_enabled: yes                  # The role in enabled
-nginx_dir: /etc/nginx               # Nginx config directory
-nginx_sites_available_dir: "{{ nginx_dir }}/sites-available"
-nginx_sites_dir: "{{nginx_dir}}/sites-enabled" # Nginx include directory
-nginx_default_site: "{{nginx_sites_dir}}/default"
+nginx_config_dir: /etc/nginx
+nginx_sites_available_dir: "{{ nginx_config_dir }}/sites-available"
+nginx_sites_enabled_dir: "{{ nginx_config_dir }}/sites-enabled"
+nginx_default_site: "{{ nginx_sites_enabled_dir }}/default"
 nginx_delete_default_site: no
+
 nginx_user: www-data                # -------------------
 nginx_worker_processes: auto        #
 nginx_worker_connections: 1024      #
@@ -23,28 +24,11 @@ nginx_error_log: /var/log/nginx/error.log
 nginx_http_options:                 # Additional http options (each line will be added as is)
                                     # Ex: nginx_http_options:
                                     #       - auth_basic "You shall not pass!";
-                                    #       - auth_basic_user_file {{nginx_auth_file}};
+                                    #       - auth_basic_user_file {{ nginx_auth_file }};
 
-nginx_servers:                      # Setup servers (simplest interface, use cfg files for large configurations)
-                                    # Ex: nginx_servers:
-                                    #     - |
-                                    #       listen 80;
-                                    #       server_name localhost;
-                                    #       location / { root html; index index.html; }
-                                    #     - |
-                                    #       listen 80;
-                                    #       server_name test.com;
-                                    #       location / { root /test; index index.html; }
-
-nginx_auth_file: "{{nginx_dir}}/.htpasswd" # Where stored passwords
+nginx_auth_file: "{{ nginx_config_dir }}/.htpasswd" # Where stored passwords
 nginx_auth_users: []                # Setup users for http authentication
                                     # nginx_auth_users:
                                     #   - { name: team, password: secret }
 
-nginx_status: 127.0.0.1             # Report about nginx state by IP. Set empty for disable.
-
-nginx_service_name: nginx
-nginx_yum_pkg: nginx
-nginx_yum_enablerepo: nginx
-nginx_yum_disablerepo: no
-nginx_apt_use_ppa_repo: yes         # Use of nginx PPA repo
+nginx_sites: []
