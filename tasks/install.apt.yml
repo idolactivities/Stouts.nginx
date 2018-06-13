@@ -11,8 +11,7 @@
 
 - name: Install packages via apt
   apt:
-    name: "{{ item }}"
-  with_items:
-    - nginx
-    - "{{ 'python-passlib' if nginx_auth_users else [] }}"
-    - "{{ 'python-selinux' if (ansible_selinux is defined and (ansible_selinux and ansible_selinux.status == 'enabled')) else [] }}"
+    name:
+      - nginx
+      - "{{ 'python-passlib' if nginx_auth_users else [] }}"
+      - "{{ 'python-selinux' if (ansible_selinux is defined and (ansible_selinux and ansible_selinux.status == 'enabled')) else [] }}"
