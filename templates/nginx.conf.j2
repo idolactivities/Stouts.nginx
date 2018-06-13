@@ -47,18 +47,6 @@ http {
 {%   endfor %}
 {% endif %}
 
-{% if nginx_status %}
-    server {
-        listen {{ nginx_status }};
-        location / {
-            access_log off;
-            allow 127.0.0.1;
-            deny all;
-            stub_status on;
-        }
-    }
-{% endif %}
-
     include {{ nginx_config_dir }}/conf.d/*.conf;
     include {{ nginx_sites_enabled_dir }}/*;
 }
