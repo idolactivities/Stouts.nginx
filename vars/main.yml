@@ -1,0 +1,2 @@
+---
+nginx_rpm_key_path: /etc/rpm/nginx_signing_key.asc

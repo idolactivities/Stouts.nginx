@@ -1,0 +1,5 @@
+---
+ansible_ssh_user: root
+nginx_sites:
+  - name: test-site
+    definition: "{{ lookup('template', 'test-site.conf.j2') }}"
