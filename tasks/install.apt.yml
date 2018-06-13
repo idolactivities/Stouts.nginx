@@ -1,15 +1,18 @@
 ---
-- include_vars: "{{ ansible_distribution }}.yml"
+- name: Trust the nginx signing key
+  apt_key:
+    data: "{{ lookup('file', 'nginx_signing_key.asc') }}"
+    id: 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 
-- name: Install dependencies
-  apt:
-    name: python-pycurl
-
-- name: Add nginx repository
+- name: Configure nginx apt repository
   apt_repository:
-    repo: ppa:nginx/stable
-  when: nginx_apt_use_ppa_repo and ansible_distribution == "Ubuntu"
+    filename: nginx
+    repo: "deb http://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} nginx"
 
-- name: Install Dependencies
+- name: Install packages via apt
   apt:
-    name: "{{ [ 'nginx', 'python-passlib' ] }}"
+    name: "{{ item }}"
+  with_items:
+    - nginx
+    - "{{ 'python-passlib' if nginx_auth_users else [] }}"
+    - "{{ 'python-selinux' if (ansible_selinux is defined and (ansible_selinux and ansible_selinux.status == 'enabled')) else [] }}"

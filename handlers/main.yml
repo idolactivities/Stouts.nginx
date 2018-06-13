@@ -1,10 +1,10 @@
 ---
 - name: restart nginx
   service:
-    name: "{{ nginx_service_name }}"
+    name: nginx
     state: restarted
 
 - name: reload nginx
   service:
-    name: "{{ nginx_service_name }}"
+    name: nginx
     state: reloaded

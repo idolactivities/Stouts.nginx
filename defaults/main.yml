@@ -1,10 +1,12 @@
 ---
 nginx_enabled: yes
+
 nginx_config_dir: /etc/nginx
 nginx_sites_available_dir: "{{ nginx_config_dir }}/sites-available"
 nginx_sites_enabled_dir: "{{ nginx_config_dir }}/sites-enabled"
 nginx_default_site: "{{ nginx_sites_enabled_dir }}/default"
 nginx_delete_default_site: no
+
 nginx_user: www-data                # -------------------
 nginx_worker_processes: auto        #
 nginx_worker_connections: 1024      #
@@ -24,14 +26,9 @@ nginx_http_options:                 # Additional http options (each line will be
                                     #       - auth_basic "You shall not pass!";
                                     #       - auth_basic_user_file {{ nginx_auth_file }};
 
-nginx_auth_file: "{{ nginx_dir }}/.htpasswd" # Where stored passwords
+nginx_auth_file: "{{ nginx_config_dir }}/.htpasswd" # Where stored passwords
 nginx_auth_users: []                # Setup users for http authentication
                                     # nginx_auth_users:
                                     #   - { name: team, password: secret }
 
-nginx_service_name: nginx
-nginx_yum_pkg: nginx
-nginx_yum_enablerepo: nginx
-nginx_yum_disablerepo: no
-nginx_apt_use_ppa_repo: yes         # Use of nginx PPA repo
 nginx_sites: []
